@@ -99,6 +99,7 @@
           const calcLoc = calcLocation(...arrCurrentLocation, ...arrBasicLocation);
           console.log("최종 계산 결과 : ", calcLoc + "m");
         }, function(error) {
+          console.log("aaa");
           alert("error : " + error.code + " //// " + error.message);
           console.log(error);
         }, {
