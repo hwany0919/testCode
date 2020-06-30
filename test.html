@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WEB TEST</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      .jb-container {
+        width: 940px;
+        margin: 10px auto;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-header {
+        padding: 20px;
+        margin-bottom: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-content {
+        width: 580px;
+        padding: 20px;
+        margin-bottom: 20px;
+        float: left;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-sidebar {
+        width: 260px;
+        padding: 20px;
+        margin-bottom: 20px;
+        float: right;
+        border: 1px solid #bcbcbc;
+      }
+      .jb-footer {
+        clear: both;
+        padding: 20px;
+        border: 1px solid #bcbcbc;
+      }
+      @media ( max-width: 480px ) {
+        .jb-container {
+          width: auto;
+        }
+        .jb-content {
+          float: none;
+          width: auto;
+        }
+        .jb-sidebar {
+          float: none;
+          width: auto;
+        }
+      }
+    </style>
+  </head>
+  <script type="text/JavaScript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script type="text/JavaScript">
+    const test = (username="anonymous", date=new Date(), message="hello") => {
+      return `${username} // ${message} at ${date}`;
+    }
+
+    const arrTest = ["moose", "2020-06-26 12:00:00", "I'm developer"];
+    console.log("test", test(...arrTest));
+
+    let nUsd = new Intl.NumberFormat("en-US", {style:"currency", currency:"USD"});
+    let nGbp = new Intl.NumberFormat("en-GB", {style:"currency", currency:"GBP"});
+    let nEur = new Intl.NumberFormat("de-DE", {style:"currency", currency:"EUR"});
+    let nJpa = new Intl.NumberFormat("ja-JP", {style:"currency", currency:"JPY"});
+
+    console.log("Intl.NumberFormat >>> ", nUsd.format(123456789.60));
+    
+    let i=0;
+    console.log(i);
+    i++;
+    console.log(typeof test);
+    const aa = "aa";
+    
+    var isAndroid = (/android/i).test(navigator.userAgent); //현재기기가 안드인지 체크
+    alert("안드로이드 여부 : " + isAndroid);
+
+    getLocation();
+    // if (isAndroid) {
+    //   lat = window.android.myLocate('lat');
+    //   lng = window.android.myLocate(null);
+    //   v = [lat, lng];
+    //   alert("lat : " + lat + " /// lng : " + lng);
+    // } else {
+    //   alert("PC웹 혹은 IOS");
+    //   getLocation();
+    // }
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        alert("aaa");
+        navigator.geolocation.getCurrentPosition(function(position) {
+          alert(position.coords.latitude + ' ' + position.coords.longitude);
+          $("#geoId").html(`위도 : ${position.coords.latitude} // 경도 : ${position.coords.longitude}`);
+        }, function(error) {
+          alert("error : " + error.code + " //// " + error.message);
+          console.log(error);
+        }, {
+          enableHighAccuracy: false,
+          maximumAge: 0,
+          timeout: Infinity
+        });
+      } else {
+        alert("GPS를 지원하지 않습니다.");
+      }
+    }
+
+  </script>
+  <body>
+    <div class="jb-container">
+      <div class="jb-header">
+        <h1>Responsive Layout</h1>
+      </div>
+      <div class="jb-content">
+        <h2>Content</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Aenean nec mollis nulla. 
+          Phasellus lacinia tempus mauris eu laoreet. Proin gravida velit dictum dui consequat malesuada. 
+          Aenean et nibh eu purus scelerisque aliquet nec non justo. 
+          Aliquam vitae aliquet ipsum. 
+          Etiam condimentum varius purus ut ultricies. 
+          Mauris id odio pretium, sollicitudin sapien eget, adipiscing risus.</p>
+      </div>
+      <div class="jb-sidebar">
+        <h2>Sidebar</h2>
+        <ul>
+          <li>Lorem</li>
+          <li>Ipsum</li>
+          <li>Dolor</li>
+          <li>Dolphin</li>
+          <li>Tester</li>
+        </ul>
+      </div>
+      <div class="jb-footer">
+        <p>Copyright</p>
+        <p id="geoId"></p>
+      </div>
+    </div>
+  </body>
+</html>
