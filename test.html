@@ -69,24 +69,37 @@
     console.log("Intl.NumberFormat >>> ", nUsd.format(123456789.60));
     
     var isAndroid = (/android/i).test(navigator.userAgent); //현재기기가 안드인지 체크
-    //alert("안드로이드 여부 : " + isAndroid);
+    console.log("안드로이드 여부 : " + isAndroid);
+    // 대한 빌딩 37.562969, 126.974542
+    // 트루텍빌딩 37.5628422, 126.9760485
+    
+    // 거리계산
+    const calcLocation = (lat1, lon1, lat2, lon2) => {
+      const deg2rad = deg => deg * (Math.PI / 180);
+      
+      let r = 6371;
+      let dLat = deg2rad(lat2 - lat1);
+      let dLon = deg2rad(lon2 - lon1);
 
-    getLocation();
-    // if (isAndroid) {
-    //   lat = window.android.myLocate('lat');
-    //   lng = window.android.myLocate(null);
-    //   v = [lat, lng];
-    //   alert("lat : " + lat + " /// lng : " + lng);
-    // } else {
-    //   alert("PC웹 혹은 IOS");
-    //   getLocation();
-    // }
+      const calcCnt = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const resultCnt = 2 * Math.atan2(Math.sqrt(calcCnt), Math.sqrt(1 - calcCnt));
+      const resultLocation = r * resultCnt * 1000; // 거리단위 M
+
+      return Math.round(resultLocation);
+    }
 
     function getLocation() {
+      var arrBasicLocation = new Array();
+      var arrCurrentLocation = [37.562969, 126.974542];
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-          alert(position.coords.latitude + ' ' + position.coords.longitude);
+          arrBasicLocation.push(position.coords.latitude);
+          arrBasicLocation.push(position.coords.longitude);
+          //alert(position.coords.latitude + ' ' + position.coords.longitude);
           $("#geoId").html(`위도 : ${position.coords.latitude} // 경도 : ${position.coords.longitude}`);
+          const calcLoc = calcLocation(...arrCurrentLocation, ...arrBasicLocation);
+          console.log("최종 계산 결과 : ", calcLoc + "m");
         }, function(error) {
           alert("error : " + error.code + " //// " + error.message);
           console.log(error);
@@ -100,6 +113,7 @@
       }
     }
 
+    getLocation();
   </script>
   <body>
     <div class="jb-container">
@@ -127,7 +141,7 @@
         </ul>
       </div>
       <div class="jb-footer">
-        <p>Copyright</p>
+        <p>GPS 위치</p>
         <p id="geoId"></p>
       </div>
     </div>
