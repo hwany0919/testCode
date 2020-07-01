@@ -121,6 +121,21 @@
     getLocation();
     var t = calcLocation(...a);
     console.log("거리 계산", t + "m");
+
+    // 숫자만 입력 가능하게 적용
+    function readOnlyNum(obj) {
+      var oThis = $(obj);
+      $(oThis).val(oThis.val().replace(/[^0-9]/g,""));
+    }
+
+    function onlyNum() {
+      var keyID =  window.event.keyCode;
+      if((keyID >=48 && keyID <= 57) || (keyID >=96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   </script>
   <body>
     <div class="jb-container">
